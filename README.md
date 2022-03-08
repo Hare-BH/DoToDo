@@ -1,6 +1,7 @@
 # todoey_flutter
 
-A new Flutter project.
+TO DO Flutter App using Hive and Provider package
+
 
 ## Getting Started
 
