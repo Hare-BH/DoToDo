@@ -43,7 +43,7 @@ class _TasksScreenState extends State<TasksScreen> {
         children: [
           Container(
             padding: EdgeInsets.only(
-                top: 60.0, left: 30.0, right: 30.0, bottom: 30.0),
+                top: 100.0, left: 30.0, right: 30.0, bottom: 30.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -65,9 +65,10 @@ class _TasksScreenState extends State<TasksScreen> {
                 Text(
                   'DoToDo',
                   style: TextStyle(
+                    fontFamily: 'RobotoCondensed',
                     color: _darkMode ? Colors.black87 : Colors.white,
                     fontSize: 50.0,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(

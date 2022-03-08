@@ -32,7 +32,7 @@ class SoftButton extends StatelessWidget {
                   ),
                 ]
               : null),
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 250),
       child: Icon(
         icon,
         size: 30.0,
