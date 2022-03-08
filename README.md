@@ -1,6 +1,6 @@
-# todoey_flutter
+# dotodo_flutter
 
-A new Flutter project.
+TO DO App in flutter
 
 ## Getting Started
 
