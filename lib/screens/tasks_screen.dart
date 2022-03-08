@@ -4,7 +4,6 @@ import 'package:todoey_flutter/models/tasks_box.dart';
 import 'add_task_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey_flutter/widgets/soft_button.dart';
-//import 'package:todoey_flutter/models/task.dart';
 
 class TasksScreen extends StatefulWidget {
   @override
