@@ -1,6 +1,7 @@
-# dotodo_flutter
+# todoey_flutter
 
-TO DO App in flutter
+TO DO Flutter App using Hive and Provider package
+
 
 ## Getting Started
 
