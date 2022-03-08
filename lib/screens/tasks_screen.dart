@@ -3,7 +3,8 @@ import 'package:hive/hive.dart';
 import 'package:todoey_flutter/models/tasks_box.dart';
 import 'add_task_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:todoey_flutter/models/task.dart';
+import 'package:todoey_flutter/widgets/soft_button.dart';
+//import 'package:todoey_flutter/models/task.dart';
 
 class TasksScreen extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  bool _isElevated = false;
+  bool _darkMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class _TasksScreenState extends State<TasksScreen> {
         backgroundColor: Colors.deepOrange,
         child: Icon(
           Icons.add,
-          color: _isElevated ? Colors.black87 : Colors.white,
+          color: _darkMode ? Colors.black87 : Colors.white,
         ),
         onPressed: () {
           showModalBottomSheet(
@@ -50,37 +51,13 @@ class _TasksScreenState extends State<TasksScreen> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      _isElevated = !_isElevated;
+                      _darkMode = !_darkMode;
                     });
                   },
-                  child: AnimatedContainer(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        color: Colors.deepOrange,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: _isElevated
-                            ? [
-                                BoxShadow(
-                                  color: Colors.grey.shade700,
-                                  offset: const Offset(2, 2),
-                                  blurRadius: 5,
-                                  spreadRadius: 1,
-                                ),
-                                BoxShadow(
-                                  color: Colors.deepOrange.shade400,
-                                  offset: Offset(-2, -2),
-                                  blurRadius: 5,
-                                  spreadRadius: 1,
-                                ),
-                              ]
-                            : null),
-                    duration: const Duration(milliseconds: 200),
-                    child: Icon(
-                      _isElevated ? Icons.lightbulb_outline : Icons.lightbulb,
-                      size: 30.0,
-                      color: _isElevated ? Colors.black87 : Colors.white,
-                    ),
+                  child: SoftButton(
+                    isPressed: _darkMode,
+                    icon: _darkMode ? Icons.lightbulb_outline : Icons.lightbulb,
+                    color: _darkMode ? Colors.black87 : Colors.white,
                   ),
                 ),
                 SizedBox(
@@ -89,7 +66,7 @@ class _TasksScreenState extends State<TasksScreen> {
                 Text(
                   'DoToDo',
                   style: TextStyle(
-                    color: _isElevated ? Colors.black87 : Colors.white,
+                    color: _darkMode ? Colors.black87 : Colors.white,
                     fontSize: 50.0,
                     fontWeight: FontWeight.w700,
                   ),
@@ -97,7 +74,7 @@ class _TasksScreenState extends State<TasksScreen> {
                 Text(
                   '${tasksBox.length} Tasks',
                   style: TextStyle(
-                    color: _isElevated ? Colors.black87 : Colors.white,
+                    color: _darkMode ? Colors.black87 : Colors.white,
                     fontSize: 18.0,
                   ),
                 ),
@@ -108,7 +85,7 @@ class _TasksScreenState extends State<TasksScreen> {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               decoration: BoxDecoration(
-                color: _isElevated ? Colors.black87 : Colors.white,
+                color: _darkMode ? Colors.black87 : Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20.0),
                   topRight: Radius.circular(20.0),
@@ -131,13 +108,21 @@ class _TasksScreenState extends State<TasksScreen> {
         itemBuilder: (context, index) {
           final task = tasksBox.getAt(index);
           return ListTile(
-            title: Text(
-              task.name,
-              style: _lineThrough(task.isDone),
+            title: Tooltip(
+              triggerMode: TooltipTriggerMode.tap,
+              decoration: BoxDecoration(
+                color: Colors.deepOrange.withOpacity(0.8),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              message: 'Long press to delete',
+              child: Text(
+                task.name,
+                style: _lineThrough(task.isDone),
+              ),
             ),
             trailing: Checkbox(
               value: task.isDone,
-              checkColor: _isElevated ? Colors.black87 : Colors.white,
+              checkColor: _darkMode ? Colors.black87 : Colors.white,
               activeColor: Colors.deepOrange,
               onChanged: (bool? value) {
                 tasksBoxMethods.updateTask(index, task, check: true);
@@ -146,9 +131,10 @@ class _TasksScreenState extends State<TasksScreen> {
             onLongPress: () {
               tasksBoxMethods.deleteTask(index);
             }, //delete
-            onTap: () {
-              tasksBoxMethods.updateTask(index, Task('${task.name}*'));
-            }, //edit
+            // onTap: () {
+            //   tasksBoxMethods.updateTask(index, Task('${task.name}*'));
+            // },
+            //edit
           );
         });
   }
@@ -156,12 +142,12 @@ class _TasksScreenState extends State<TasksScreen> {
   TextStyle _lineThrough(bool isDone) {
     if (isDone)
       return TextStyle(
-        color: _isElevated ? Colors.deepOrange : Colors.black87,
+        color: _darkMode ? Colors.deepOrange : Colors.black87,
         decoration: TextDecoration.lineThrough,
       );
     else
       return TextStyle(
-        color: _isElevated ? Colors.deepOrange : Colors.black87,
+        color: _darkMode ? Colors.deepOrange : Colors.black87,
       );
   }
 }
